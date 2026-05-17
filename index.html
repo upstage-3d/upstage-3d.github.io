@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upstage — Theater Design for Everyone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0d0d0f;
+        --cream: #f5f0e8;
+        --gold: #c9a84c;
+        --amber: #e8a020;
+        --rust: #b54a2a;
+        --dim: #8a7f72;
+        --spotlight: rgba(201, 168, 76, 0.12);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--ink);
+        color: var(--cream);
+        font-family: "DM Mono", monospace;
+        overflow-x: hidden;
+      }
+
+      /* NAV */
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px 40px;
+        border-bottom: 1px solid rgba(245, 240, 232, 0.06);
+      }
+      .nav-logo {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        color: var(--gold);
+        letter-spacing: 0.05em;
+        text-decoration: none;
+      }
+      .nav-badge {
+        font-size: 0.65rem;
+        color: var(--dim);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        border: 1px solid rgba(138, 127, 114, 0.3);
+        padding: 4px 10px;
+      }
+
+      /* HERO */
+      header {
+        padding: 80px 40px 70px;
+        text-align: center;
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      .eyebrow {
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 24px;
+      }
+      h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.8rem, 7vw, 5rem);
+        line-height: 1.05;
+        font-weight: 700;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--gold);
+        display: block;
+      }
+
+      .hero-sub {
+        margin-top: 24px;
+        font-size: 0.82rem;
+        line-height: 1.9;
+        color: var(--dim);
+      }
+      .hero-cta {
+        margin-top: 40px;
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary {
+        background: var(--gold);
+        color: var(--ink);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 14px 32px;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.2s;
+        display: inline-block;
+      }
+      .btn-primary:hover {
+        background: var(--amber);
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: var(--cream);
+        font-family: "DM Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 14px 32px;
+        border: 1px solid rgba(245, 240, 232, 0.2);
+        cursor: pointer;
+        text-decoration: none;
+        transition: border-color 0.2s;
+        display: inline-block;
+      }
+      .btn-ghost:hover {
+        border-color: var(--gold);
+      }
+
+      /* SECTIONS */
+      section {
+        padding: 100px 40px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .section-label {
+        font-size: 0.65rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 14px;
+      }
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.15;
+        margin-bottom: 56px;
+        max-width: 500px;
+      }
+      .section-title em {
+        font-style: italic;
+        color: var(--gold);
+      }
+
+      /* FEATURES */
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 2px;
+      }
+      .feature-card {
+        background: rgba(245, 240, 232, 0.03);
+        border: 1px solid rgba(245, 240, 232, 0.06);
+        padding: 38px 30px;
+        transition:
+          background 0.3s,
+          border-color 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .feature-card:hover {
+        background: var(--spotlight);
+        border-color: rgba(201, 168, 76, 0.15);
+      }
+      .feature-card:hover::before {
+        opacity: 1;
+      }
+      .feature-icon {
+        font-size: 1.5rem;
+        margin-bottom: 18px;
+        display: block;
+      }
+      .feature-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.05rem;
+        margin-bottom: 10px;
+      }
+      .feature-desc {
+        font-size: 0.76rem;
+        line-height: 1.85;
+        color: var(--dim);
+      }
+
+      /* DIVIDER */
+      .divider {
+        border: none;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(201, 168, 76, 0.2),
+          transparent
+        );
+        margin: 0 40px;
+      }
+
+      /* MISSION */
+      .mission-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+      @media (max-width: 680px) {
+        .mission-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+      }
+      .mission-text p {
+        font-size: 0.8rem;
+        line-height: 2.1;
+        color: var(--dim);
+        margin-bottom: 16px;
+      }
+      .stat-block {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      }
+      .stat {
+        border-left: 2px solid var(--gold);
+        padding-left: 22px;
+      }
+      .stat-num {
+        font-family: "Playfair Display", serif;
+        font-size: 2.6rem;
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 0.66rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--dim);
+        margin-top: 6px;
+      }
+
+      /* SPONSOR */
+      .sponsor-section {
+        text-align: center;
+        padding: 64px 40px;
+      }
+      .sponsor-label {
+        font-size: 0.65rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--dim);
+        margin-bottom: 20px;
+      }
+      .sponsor-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        border: 1px solid rgba(201, 168, 76, 0.2);
+        padding: 16px 28px;
+        font-size: 0.78rem;
+      }
+      .sponsor-badge .dot {
+        width: 8px;
+        height: 8px;
+        background: var(--gold);
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      /* NOTIFY */
+      .notify-section {
+        background: rgba(201, 168, 76, 0.04);
+        border: 1px solid rgba(201, 168, 76, 0.12);
+        padding: 60px 48px;
+        text-align: center;
+        margin: 0 40px;
+      }
+      .notify-section h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+      }
+      .notify-section > p {
+        font-size: 0.78rem;
+        color: var(--dim);
+        margin-bottom: 28px;
+      }
+      .notify-form {
+        display: flex;
+        gap: 8px;
+        max-width: 420px;
+        margin: 0 auto;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .notify-form input {
+        flex: 1;
+        min-width: 200px;
+        background: rgba(245, 240, 232, 0.05);
+        border: 1px solid rgba(245, 240, 232, 0.12);
+        color: var(--cream);
+        font-family: "DM Mono", monospace;
+        font-size: 0.78rem;
+        padding: 12px 16px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .notify-form input:focus {
+        border-color: var(--gold);
+      }
+      .notify-form input::placeholder {
+        color: var(--dim);
+      }
+      .notify-form button {
+        background: var(--gold);
+        color: var(--ink);
+        font-family: "DM Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 12px 22px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s;
+        white-space: nowrap;
+      }
+      .notify-form button:hover {
+        background: var(--amber);
+      }
+      .notify-success {
+        display: none;
+        font-size: 0.76rem;
+        color: var(--gold);
+        margin-top: 14px;
+      }
+
+      /* DONATE */
+      #donate {
+        text-align: center;
+      }
+      .donate-wrap {
+        display: inline-block;
+        border: 1px solid rgba(201, 168, 76, 0.15);
+        padding: 2px;
+        background: rgba(245, 240, 232, 0.02);
+        margin-top: 48px;
+      }
+
+      /* FOOTER */
+      footer {
+        border-top: 1px solid rgba(245, 240, 232, 0.06);
+        padding: 36px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 14px;
+        font-size: 0.66rem;
+        color: var(--dim);
+        letter-spacing: 0.06em;
+      }
+      footer a {
+        color: var(--dim);
+        text-decoration: none;
+      }
+      footer a:hover {
+        color: var(--gold);
+      }
+      .footer-logo {
+        font-family: "Playfair Display", serif;
+        font-size: 1.1rem;
+        color: var(--gold);
+      }
+
+      /* REVEAL */
+      .reveal {
+        opacity: 0;
+        transform: translateY(22px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="nav-logo" href="#">Upstage</a>
+      <span class="nav-badge">Coming Soon</span>
+    </nav>
+
+    <header>
+      <p class="eyebrow">Theater Design for Everyone</p>
+      <h1>Design the Stage.<em>Tell the Story.</em></h1>
+      <p class="hero-sub">
+        Upstage brings professional 3D stage design and lighting simulation to
+        school and community theaters — no CAD experience required.
+      </p>
+      <div class="hero-cta">
+        <a href="#notify" class="btn-primary">Get Notified</a>
+        <a href="#donate" class="btn-ghost">Support Us</a>
+      </div>
+    </header>
+
+    <section id="features">
+      <p class="section-label reveal">What We're Building</p>
+      <h2 class="section-title reveal">
+        Tools that were once <em>out of reach</em>
+      </h2>
+      <div class="features">
+        <div class="feature-card reveal">
+          <span class="feature-icon">🎭</span>
+          <h3 class="feature-title">3D Stage Design</h3>
+          <p class="feature-desc">
+            Build full 3D models of your stage, set pieces, and scenery.
+            Visualize your production before a single nail is driven.
+          </p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-icon">💡</span>
+          <h3 class="feature-title">Lighting Simulation</h3>
+          <p class="feature-desc">
+            Place, aim, and color lights in a virtual environment. See exactly
+            how your design will look on opening night.
+          </p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-icon">🤝</span>
+          <h3 class="feature-title">Real-Time Collaboration</h3>
+          <p class="feature-desc">
+            Directors, designers, and students work together simultaneously —
+            from any device, anywhere in the world.
+          </p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-icon">📚</span>
+          <h3 class="feature-title">Built-in Education</h3>
+          <p class="feature-desc">
+            Integrated stage design lessons and guides make theater education
+            accessible even without a physical stage environment.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <section id="about">
+      <div class="mission-grid">
+        <div class="mission-text reveal">
+          <p class="section-label">Our Mission</p>
+          <h2 class="section-title" style="margin-bottom: 28px">
+            Theater education <em>without barriers</em>
+          </h2>
+          <p>
+            Every student deserves to learn the craft of theater — not just
+            performance, but the technical artistry behind the curtain. Stage
+            design, lighting, and set construction are often invisible
+            disciplines, taught only where resources allow.
+          </p>
+          <p>
+            Upstage is a non-profit web application giving any school or
+            community theater access to professional-grade design tools, guided
+            lessons, and a collaborative environment that mirrors real-world
+            theater workflows.
+          </p>
+        </div>
+        <div class="stat-block reveal">
+          <div class="stat">
+            <div class="stat-num">3D</div>
+            <div class="stat-label">Full spatial stage modeling</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">Live</div>
+            <div class="stat-label">Real-time multi-user collaboration</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">Zero</div>
+            <div class="stat-label">CAD experience required</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <div id="updates" style="padding: 80px 0">
+      <div class="notify-section reveal">
+        <h3>Stay in the loop.</h3>
+        <p>
+          We're still building. Follow our announcements page for updates as we
+          get closer to launch.
+        </p>
+        <a
+          href="https://hcb.hackclub.com/upstage-3d/announcements"
+          target="_blank"
+          class="btn-primary"
+          style="margin-top: 8px"
+          >View Announcements</a
+        >
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <section id="donate">
+      <p class="section-label reveal">Support Upstage</p>
+      <h2
+        class="section-title reveal"
+        style="max-width: 100%; margin-bottom: 8px"
+      >
+        Help us bring the stage<br /><em>to everyone</em>
+      </h2>
+      <p class="reveal" style="font-size: 0.78rem; color: var(--dim)">
+        Donations are tax-deductible through our fiscal sponsor, The Hack
+        Foundation.
+      </p>
+      <div class="donate-wrap reveal" style="height: 1024px">
+        <iframe
+          src="https://hcb.hackclub.com/donations/start/upstage-3d"
+          style="border: none"
+          name="donateFrame"
+          scrolling="yes"
+          frameborder="0"
+          marginheight="0px"
+          marginwidth="0px"
+          height="1024px"
+          width="512px"
+          allowfullscreen
+        >
+        </iframe>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <div class="sponsor-section reveal">
+      <p class="sponsor-label">Fiscal Sponsor</p>
+      <div class="sponsor-badge">
+        <span class="dot"></span>
+        Fiscally sponsored by The Hack Foundation
+        <span class="dot"></span>
+      </div>
+      <p
+        style="
+          font-size: 0.68rem;
+          color: var(--dim);
+          margin-top: 14px;
+          letter-spacing: 0.05em;
+        "
+      >
+        A 501(c)(3) nonprofit · EIN: 81-2908499
+      </p>
+    </div>
+
+    <footer>
+      <span class="footer-logo">Upstage</span>
+      <span><a href="mailto:hello@upstage3d.org">hello@upstage3d.org</a></span>
+      <span>© 2026 Upstage</span>
+    </footer>
+
+    <script>
+      // Scroll reveal
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add("visible");
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
+    </script>
+  </body>
+</html>
